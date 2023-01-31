@@ -104,7 +104,7 @@ class MyNeoPixel(object):
         """ 
         add segment to member variable segment-list
         segment = (index_from: int, index_to: int, color_tuple: tuple)
-        color_tuple ((r: int,g: int,b: int
+        color_tuple ((r: int,g: int,b: int))
         """
         self.segments.append(segment)
 
@@ -124,7 +124,7 @@ class MyNeoPixel(object):
     
     def clear_segment(self, idx: int, default_color: tuple=(0,0,0)):
         """
-        reset segement to "black" or any color by index
+        reset segment to "black" or any color by index
         """
         idx_from, idx_to, pix_def = self.segments[idx]
         new_def = []
