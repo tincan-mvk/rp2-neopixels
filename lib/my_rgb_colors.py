@@ -109,14 +109,6 @@ class my_rgb_colors(object):
         max = 0
         min = 0
 
-        # rgb_list = []
-        # rgb_list.append(r)
-        # rgb_list.append(g)
-        # rgb_list.append(b)
-        # rgb_list.sort()
-        # min = rgb_list.pop(0)
-        # max = rgb_list.pop(len(rgb_list)-1)
-
         min = builtins.min(r, g, b)
         max = builtins.max(r, g, b)
 
