@@ -5,7 +5,7 @@ class MyNeoPixel(object):
     """
     Delegation of neopixel.py
     """
-    def __init__(self, outputPin: Pin=Pin(0), numOfPixels: int=3, breakPin=None):
+    def __init__(self, outputPin: Pin=Pin(0), numOfPixels: int=3, breakPin=None) -> None:
         """
         create delegation object with NeoPixel member variable and others
         """
@@ -17,17 +17,25 @@ class MyNeoPixel(object):
             self.breakPin = None
         self.brightness = 100
         self.segments = []
+        self.IGNORE_PIXEL_BRIGHTNESS = 999
+        self.pixel_brightness = [ self.IGNORE_PIXEL_BRIGHTNESS for i in range(len(self.np)) ]
         self.sync_pixels()
 
     def sync_np(self):
         """
         tranfer intern list to NeoPixel-list
         """
+        brightness = 0
         for idx in range (len(self.pixels)):
             r, g, b = self.get_color_pixel(idx)
-            r = int( r * ( self.brightness / 100 ))
-            g = int( g * ( self.brightness / 100 ))
-            b = int( b * ( self.brightness / 100 ))
+            if self.pixel_brightness[idx] != self.brightness and self.pixel_brightness[idx] != self.IGNORE_PIXEL_BRIGHTNESS:
+                brightness = self.pixel_brightness[idx]
+            else:
+                brightness = self.brightness
+
+            r = int( r * ( brightness / 100 ))
+            g = int( g * ( brightness / 100 ))
+            b = int( b * ( brightness / 100 ))
             self.np[idx] = (r, g, b)
 
     def show(self):
@@ -44,6 +52,28 @@ class MyNeoPixel(object):
         self.pixels = []
         for i in range (len(self.np)):
             self.pixels.append(self.np[i])
+
+    def set_brightness(self, brightness=None):
+        """
+        set global brightness
+        """
+        if brightness == None:
+            pass
+        else:
+            self.brightness = brightness
+
+    def set_pixel_brightness(self, idx: int, brightness: int=100):
+        """
+        set brightness for single pixel
+        """
+        self.pixel_brightness[idx] = brightness
+
+    def reset_pixel_brightness(self):
+        """
+        set brightness for single pixel
+        """
+        self.pixel_brightness = []
+        self.pixel_brightness = [ self.IGNORE_PIXEL_BRIGHTNESS for i in range(len(self.np)) ]
 
     def set_pixel(self, idx: int, color: tuple):
         """
@@ -92,14 +122,6 @@ class MyNeoPixel(object):
         else:
             return False
     
-    def set_brightness(self, brightness=None):
-        """
-        set global brightness
-        """
-        if brightness == None:
-            pass
-        else:
-            self.brightness = brightness
     def add_segment(self, segment: tuple):
         """ 
         add segment to member variable segment-list
