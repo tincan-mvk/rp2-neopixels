@@ -62,9 +62,9 @@ class MyNeoPixel(object):
         else:
             self.brightness = brightness
 
-    def set_pixel_brightness(self, idx: int, brightness: int=100):
+    def set_pixel_brightness(self, idx: int, brightness: int=999):
         """
-        set brightness for single pixel
+        set brightness for single pixel, initial brightness value resets pixel brightness (999)
         """
         self.pixel_brightness[idx] = brightness
 
