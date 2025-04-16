@@ -139,7 +139,7 @@ class MyNeoPixel(object):
 
     def get_segment(self, idx: int):
         """
-        get segment from member varaibe segement-list
+        get segment from member variable segement-list
         """
         idx_from, idx_to, pix_def = self.segments[idx]
         return idx_from, idx_to, pix_def
